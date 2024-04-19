@@ -75,5 +75,5 @@ class UARTDevice:
         }
         if of_compatible_0 := data.get("OF_COMPATIBLE_0"):
             self.manufacturer = of_compatible_0.partition(",")[0]
-        if mod_alias := data.get("MODALIAS"):
-            self.product = mod_alias.partition(",")[-1]
+        if (mod_alias := data.get("MODALIAS")) and "," in mod_alias:
+            self.product = mod_alias.split(",")[-1]
