@@ -1,14 +1,8 @@
 from __future__ import annotations
 
-__version__ = "0.4.4"
+__version__ = "0.0.1"
 
 import asyncio
-
-try:
-    from fcntl import ioctl
-except ImportError:
-    ioctl = None  # type: ignore
-
 from pathlib import Path
 
 BLUETOOTH_DEVICE_PATH = Path("/sys/class/bluetooth")

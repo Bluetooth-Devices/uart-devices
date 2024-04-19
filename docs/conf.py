@@ -7,7 +7,7 @@
 project = "uart-devices"
 copyright = "2024, J. Nick Koston"
 author = "J. Nick Koston"
-release = "0.0.0"
+release = "0.0.1"
 
 # General configuration
 extensions = [
