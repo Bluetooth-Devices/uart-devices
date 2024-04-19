@@ -23,7 +23,7 @@ async def run() -> None:
         assert dev.uart_device is not None  # noqa: S101
         print(
             f"hci{i} manufacturer: {dev.uart_device.manufacturer}, "
-            f"product: {dev.uart_device.product}, "
+            f"product: {dev.uart_device.product} "
         )
 
 
