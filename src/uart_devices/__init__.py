@@ -14,16 +14,16 @@ class NotAUARTDeviceError(ValueError):
 
 
 __all__ = [
-    "UARTDevice",
     "BluetoothDevice",
     "NotAUARTDeviceError",
+    "UARTDevice",
 ]
 
 
 class BluetoothDevice:
     """Bluetooth device object."""
 
-    __slots__ = ("hci", "path", "device_path", "uart_device")
+    __slots__ = ("device_path", "hci", "path", "uart_device")
 
     def __init__(self, hci: int) -> None:
         """Initialize a BluetoothDevice object."""
@@ -49,8 +49,8 @@ class UARTDevice:
     __slots__ = (
         "id_str",
         "manufacturer",
-        "product",
         "path",
+        "product",
     )
 
     def __init__(self, id_str: str) -> None:
