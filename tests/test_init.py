@@ -1,4 +1,5 @@
 import asyncio
+from unittest import mock
 
 import pytest
 
@@ -148,24 +149,19 @@ async def test_bluetooth_device_async_setup(monkeypatch, tmp_path):
     assert device.uart_device.manufacturer == "brcm"
 
 
-def test_bluetooth_device_setup_runs_in_executor_via_async(monkeypatch, tmp_path):
+@pytest.mark.asyncio
+async def test_uart_device_async_setup_uses_executor(monkeypatch, tmp_path):
     """async_setup must offload blocking I/O to the executor."""
     monkeypatch.setattr("uart_devices.UART_DEVICE_PATH", tmp_path)
     _write_uevent(tmp_path / "serial0-0", "OF_COMPATIBLE_0=brcm,bcm43438-bt\n")
     device = UARTDevice("serial0-0")
     device.path = tmp_path / "serial0-0"
 
-    async def main():
-        loop = asyncio.get_running_loop()
-        called_in_executor = {"value": False}
-        original_run_in_executor = loop.run_in_executor
-
-        def tracker(executor, func, *args):
-            called_in_executor["value"] = True
-            return original_run_in_executor(executor, func, *args)
-
-        monkeypatch.setattr(loop, "run_in_executor", tracker)
+    loop = asyncio.get_running_loop()
+    with mock.patch.object(
+        loop, "run_in_executor", wraps=loop.run_in_executor
+    ) as spy:
         await device.async_setup()
-        assert called_in_executor["value"] is True
 
-    asyncio.run(main())
+    spy.assert_called_once()
+    assert device.manufacturer == "brcm"
