@@ -158,9 +158,7 @@ async def test_uart_device_async_setup_uses_executor(monkeypatch, tmp_path):
     device.path = tmp_path / "serial0-0"
 
     loop = asyncio.get_running_loop()
-    with mock.patch.object(
-        loop, "run_in_executor", wraps=loop.run_in_executor
-    ) as spy:
+    with mock.patch.object(loop, "run_in_executor", wraps=loop.run_in_executor) as spy:
         await device.async_setup()
 
     spy.assert_called_once()
