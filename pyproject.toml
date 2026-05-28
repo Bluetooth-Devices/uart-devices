@@ -6,7 +6,7 @@ authors = ["J. Nick Koston <nick@koston.org>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/bluetooth-devices/uart-devices"
-documentation = "https://uart-devices.readthedocs.io"
+documentation = "https://github.com/bluetooth-devices/uart-devices/tree/main/docs"
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Developers",
