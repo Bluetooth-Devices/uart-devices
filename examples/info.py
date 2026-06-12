@@ -4,7 +4,7 @@ import logging
 from uart_devices import BluetoothDevice, NotAUARTDeviceError
 
 logging.basicConfig(level=logging.INFO)
-logging.getLogger("usb_devices").setLevel(logging.DEBUG)
+logging.getLogger("uart_devices").setLevel(logging.DEBUG)
 
 
 async def run() -> None:
@@ -15,7 +15,7 @@ async def run() -> None:
         try:
             await loop.run_in_executor(None, dev.setup)
         except NotAUARTDeviceError:
-            print(f"hci{i} is not a USB device")
+            print(f"hci{i} is not a UART device")
             continue
         except FileNotFoundError:
             print(f"hci{i} not found")
