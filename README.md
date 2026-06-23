@@ -4,9 +4,6 @@
   <a href="https://github.com/bluetooth-devices/uart-devices/actions/workflows/ci.yml?query=branch%3Amain">
     <img src="https://img.shields.io/github/actions/workflow/status/bluetooth-devices/uart-devices/ci.yml?branch=main&label=CI&logo=github&style=flat-square" alt="CI Status" >
   </a>
-  <a href="https://uart-devices.readthedocs.io">
-    <img src="https://img.shields.io/readthedocs/uart-devices.svg?logo=read-the-docs&logoColor=fff&style=flat-square" alt="Documentation Status">
-  </a>
   <a href="https://codecov.io/gh/bluetooth-devices/uart-devices">
     <img src="https://img.shields.io/codecov/c/github/bluetooth-devices/uart-devices.svg?logo=codecov&logoColor=fff&style=flat-square" alt="Test coverage percentage">
   </a>
@@ -32,7 +29,7 @@
 
 ---
 
-**Documentation**: <a href="https://uart-devices.readthedocs.io" target="_blank">https://uart-devices.readthedocs.io </a>
+**Documentation**: <a href="https://github.com/bluetooth-devices/uart-devices/tree/main/docs" target="_blank">https://github.com/bluetooth-devices/uart-devices/tree/main/docs </a>
 
 **Source Code**: <a href="https://github.com/bluetooth-devices/uart-devices" target="_blank">https://github.com/bluetooth-devices/uart-devices </a>
 
