@@ -68,11 +68,11 @@ class UARTDevice:
 
     def setup(self) -> None:
         """Read the UART device."""
-        data: dict[str, str] = {
-            parts[0]: parts[2]
-            for line in self.path.joinpath("uevent").read_text().strip().splitlines()
-            if (parts := line.partition("="))
-        }
+        data: dict[str, str] = {}
+        for line in self.path.joinpath("uevent").read_text().splitlines():
+            key, sep, value = line.partition("=")
+            if sep:
+                data[key] = value
         if of_compatible_0 := data.get("OF_COMPATIBLE_0"):
             self.manufacturer = of_compatible_0.partition(",")[0]
         if (mod_alias := data.get("MODALIAS")) and "," in mod_alias:
