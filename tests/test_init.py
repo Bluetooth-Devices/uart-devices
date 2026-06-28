@@ -1,5 +1,4 @@
-import asyncio
-from unittest import mock
+import threading
 
 import pytest
 
@@ -150,16 +149,26 @@ async def test_bluetooth_device_async_setup(monkeypatch, tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_uart_device_async_setup_uses_executor(monkeypatch, tmp_path):
-    """async_setup must offload blocking I/O to the executor."""
+async def test_uart_device_async_setup_runs_off_event_loop_thread(
+    monkeypatch, tmp_path
+):
+    """async_setup offloads the blocking read to a worker thread."""
     monkeypatch.setattr("uart_devices.UART_DEVICE_PATH", tmp_path)
     _write_uevent(tmp_path / "serial0-0", "OF_COMPATIBLE_0=brcm,bcm43438-bt\n")
     device = UARTDevice("serial0-0")
     device.path = tmp_path / "serial0-0"
 
-    loop = asyncio.get_running_loop()
-    with mock.patch.object(loop, "run_in_executor", wraps=loop.run_in_executor) as spy:
-        await device.async_setup()
+    main_thread = threading.get_ident()
+    setup_thread: dict[str, int] = {}
+    original_setup = UARTDevice.setup
 
-    spy.assert_called_once()
+    def tracking_setup(self: UARTDevice) -> None:
+        setup_thread["id"] = threading.get_ident()
+        original_setup(self)
+
+    monkeypatch.setattr(UARTDevice, "setup", tracking_setup)
+
+    await device.async_setup()
+
+    assert setup_thread["id"] != main_thread
     assert device.manufacturer == "brcm"
